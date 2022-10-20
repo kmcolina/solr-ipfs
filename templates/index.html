@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+    integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+  <title>AWV indexacion y busqueda</title>
+</head>
+
+<body>
+  <div class="container-fluid w-100 mt-0 mb-5">
+
+
+
+    <div>
+      <h1>AWV Interfaz de Flask para interacturar con Solr</h1>
+      <br>
+      <h4>Para realizar busquedas</h4>
+      <p>Ingrese palabras asociadas a: </p>
+      <p>nombre de archivo warc ejemplo: IAH </p>
+      <p>nombre del recurso ejemplo: robots.txt </p>
+      <p>al tipo de contenido ejemplo: text </p>
+    </div>
+    <br>
+    <form class="form-inline" action="/" method="post">
+      <div class="form-group mx-sm-3 mb-2">
+        <input type="text" class="form-control" name="searchTerm" value="" placeholder="Enter search term(s)">
+      </div>
+      <button type="submit" class="btn btn-primary mb-2">Buscar</button>
+    </form>
+    <div class="col-12">
+
+
+
+
+      <div class="numresults" style="font-weight: bold;">
+        {% if numresults is not none %}
+        Number of Results:
+        <span style="margin-left: 12px;">{{ numresults }}</span>
+        {% endif %}
+      </div>
+      <br>
+
+      <!-- {% if results and results|length > 0 %}
+      <table class="table table-striped" style="max-width: 1200px;">
+        <thead>
+          <tr>
+            <th>source_file</th>
+            <th>crawl_year</th>
+            <th>wayback_date</th>
+            <th>resourcename</th>
+            <th>content_type</th>
+            <th>content</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for document in results %}
+          <tr>
+            <td>{{ document['source_file'] }}</td>
+            <td>{% if document['crawl_year'] %}{{ document['crawl_year'] }}{% endif %}</td>
+            <td>{% if document['wayback_date']%}{{ document['wayback_date'] }}{% endif %}</td>
+            <td>{% if document['resourcename']%}{{ document['resourcename'] }}{% endif %}</td>
+            <td>{% if document['content_type']%}{{ ''.join(document['content_type']) }}{% endif %}
+            </td>
+            <td>{% if document['content']%}{{ ''.join(document['content']) }}{% endif %}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+
+      {% endif %} -->
+
+      {% if results and results|length > 0 %}
+      <div class="col-12 d-flex  justify-content: space-between">
+
+        <p class="col-2"><strong> source_file</strong></p>
+        <p class="col-1"><strong>crawl_year</strong></p>
+        <p class="col-2"><strong>resourcename</strong></p>
+        <p class="col-2"><strong>content_type</strong></p>
+        <p class="col-5"><strong>content</strong></p>
+      </div>
+      <br>
+      <br>
+      {% for document in results %}
+      <div class="d-flex  justify-content: space-between">
+        <p class="col-2">{{ document['source_file'] }}</p>
+        <p class="col-1">{% if document['crawl_year'] %}{{ document['crawl_year'] }}{% endif %}</p>
+        <p class="col-2">{% if document['resourcename']%}{{ document['resourcename'] }}{% endif %}</p>
+        <p class="col-2">{% if document['content_type']%}{{ ''.join(document['content_type']) }}{% endif %}</p>
+        <p class="col-5">{% if document['content']%}{{ ''.join(document['content']) }}{% endif %}</p>
+      </div>
+      {% endfor %}
+
+
+
+      {% endif %}
+
+
+
+
+      {% if results and results|length > 10 %}
+      <h4>Resultados completos, todas las columnas</h4>
+      <br>
+
+      <div class="col-12">
+        {% for document in results %}
+
+        <p>{{ document }}</p>
+        {% endfor %}
+      </div>
+      {% endif %}
+
+      {% if results and results|length == 0 %}
+      <div class="col-12">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>source_file</th>
+              <th>crawl_year</th>
+              <th>wayback_date</th>
+              <th>resourcename</th>
+              <th>content_type</th>
+              <th>content</th>
+            </tr>
+          </thead>
+
+        </table>
+      </div>
+      {% endif %}
+    </div>
+
+
+  </div>
+</body>
+
+</html>

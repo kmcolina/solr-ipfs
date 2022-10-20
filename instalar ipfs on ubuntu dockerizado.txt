@@ -1,0 +1,36 @@
+INSTALL WGET
+apt install wget
+
+***********************************
+INSTALL IPFS 
+instrucciones: https://docs.ipfs.tech/install/command-line/#which-node-should-you-use-with-the-command-line
+
+
+wget https://dist.ipfs.tech/kubo/v0.15.0/kubo_v0.15.0_linux-amd64.tar.gz
+
+tar -xvzf kubo_v0.15.0_linux-amd64.tar.gz
+
+cd kubo
+
+sudo bash install.sh
+
+
+ipfs --version
+*************************************
+SALVAR CONTAINER COMO IMAGEN 
+
+
+***********************************
+script de python debe:
+ejecutar el iniciar de ipfs: 
+ipfs init
+ipfs daemon
+
+ejecutar cdxj-indexer -11 nombrewarc > nombrewarc.cdx
+
+el archivo anterior mandarlo a ipfs con un 
+ipfs add nombrewarc.cdx
+
+la ruta de salda del ipfs la debo de guardar en archivo en combinacion nombrewarc y su url ipfs
+
+de ser posible esa url agregarla en el index de ipfs

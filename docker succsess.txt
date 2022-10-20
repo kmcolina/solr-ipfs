@@ -1,0 +1,29 @@
+C:\Users\Usuario\Documents\Pasantia junio 2022\solrwayback>docker build -f Dockerfile .
+[+] Building 3447.1s (20/20) FINISHED
+ => [internal] load build definition from Dockerfile                                                               0.0s
+ => => transferring dockerfile: 1.94kB                                                                             0.0s
+ => [internal] load .dockerignore                                                                                  0.0s
+ => => transferring context: 34B                                                                                   0.0s
+ => [internal] load metadata for docker.io/library/tomcat:9.0-jre8-alpine                                          0.7s
+ => [internal] load metadata for docker.io/library/maven:3-jdk-8                                                   1.2s
+ => [internal] load build context                                                                                  0.1s
+ => => transferring context: 46.60kB                                                                               0.1s
+ => [stage-1 1/8] FROM docker.io/library/tomcat:9.0-jre8-alpine@sha256:17accf0afeeecce0310d363490cd60a788aa4630ab  0.0s
+ => [maven_tool_chain 1/6] FROM docker.io/library/maven:3-jdk-8@sha256:1e6717e16d26444a74bbe8145c1ebccc9fb69a1aa6  0.0s
+ => CACHED [maven_tool_chain 2/6] COPY pom.xml /tmp/                                                               0.0s
+ => CACHED [maven_tool_chain 3/6] WORKDIR /tmp/                                                                    0.0s
+ => [maven_tool_chain 4/6] RUN mvn -B -q -s /usr/share/maven/ref/settings-docker.xml dependency:resolve-plugin  2134.7s
+ => [maven_tool_chain 5/6] COPY src /tmp/src/                                                                      0.6s
+ => [maven_tool_chain 6/6] RUN mvn -B -s /usr/share/maven/ref/settings-docker.xml package -DskipTests           1308.2s
+ => CACHED [stage-1 2/8] RUN apk add gettext                                                                       0.0s
+ => CACHED [stage-1 3/8] RUN apk update && apk add --no-cache nmap &&     echo @edge http://nl.alpinelinux.org/al  0.0s
+ => CACHED [stage-1 4/8] RUN chromium-browser --version                                                            0.0s
+ => [stage-1 5/8] COPY --from=MAVEN_TOOL_CHAIN /tmp/target/solrwayback-*.war /usr/local/tomcat/webapps/solrwaybac  0.3s
+ => [stage-1 6/8] COPY docker/solrwayback.properties /root/solrwayback.properties.template                         0.1s
+ => [stage-1 7/8] COPY docker/solrwaybackweb.properties /root/solrwaybackweb.properties.template                   0.0s
+ => [stage-1 8/8] COPY docker/docker-entrypoint.sh /                                                               0.0s
+ => exporting to image                                                                                             0.3s
+ => => exporting layers                                                                                            0.3s
+ => => writing image sha256:3b1127f63f7328b74478abca21328a15a2104b39a1bb01231bdbf2775df300fc                       0.0s
+
+Use 'docker scan' to run Snyk tests against images to find vulnerabilities and learn how to fix them

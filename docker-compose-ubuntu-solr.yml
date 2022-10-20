@@ -1,0 +1,47 @@
+version: "3.2"
+
+services:
+
+  # Solr instance for running tests against
+  solr-0:
+    image: solr-master:latest
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    ports:
+      - "18983:8983"
+    networks:
+      - solr
+    expose:
+      - "7070"
+
+  # Hook to populate the image with test data:
+  populate:
+    image: solr-populate:latest
+    # entrypoint: ["/bin/sh","-c"]
+    command: "bash /docker/populateTest.sh"
+    #command: "ls"
+    environment:
+      - "SOLR_URL=${SOLR_URL:-http://solr:8983/solr/discovery}"
+    volumes:
+      - ./docker:/docker
+    networks:
+      - solr
+
+  ubuntupython:
+      image: ubuntu-python-ipfs:latest
+      volumes:
+        - ./docker:/docker
+      expose:
+        - "4001:4001"
+        - "127.0.0.1:8080:8080"
+        - "127.0.0.1:8081:8081"
+        - "127.0.0.1:5001:5001"
+      networks:
+        - solr 
+      #entrypoint: ["tail", "-f","/bin/sh"]
+      #entrypoint: ["tail", "-f"]
+
+networks:
+  solr:
+    name: solr
+    driver: bridge

@@ -1,0 +1,47 @@
+testin el indexer en testpython
+
+copiando el archivo local al docker
+
+docker cp docker/test-warcs/IAH-20080430204825-00000-blackbook.warc 7d05b79c40d4:/IAH-20080430204825-00000-blackbook.warc
+
+
+indexando con webrecoder
+cdxj-indexer -11 IAH-20080430204825-00000-blackbook.warc  > IAH-20080430204825-00000-blackbook.warc.cdx
+
+
+
+indexando con warctools
+
+warcindex -o cdx IAH-20080430204825-00000-blackbook.warc > hanzoo.cdx
+
+
+copiando de docker a local
+docker cp 7d05b79c40d4:/IAH-20080430204825-00000-blackbook.warc.cdx   ./IAH-20080430204825-00000-blackbook.warc.cdx
+
+
+docker cp 7d05b79c40d4:/hanzoo.cdx   ./hanzoo.cdx
+
+
+*****************************************************************************************
+HASTA ACA TODO BIEN
+*****************************************************************************************
+
+ejecutar un docker file 
+
+docker-compose -f docker-composeTest.yml up
+
+
+*****************************************************************************************
+HASTA ACA FUNCIONA - FALTA VALIDAR QUE GUARDE DATA
+*****************************************************************************************
+
+
+AVERIGUAR COMO PASAR COMANDO ENTRE CONTAINER
+
+AVERIGUAR COMO INSTALAR IPFS EN UBUNTU VIAR TERMINAL CON UN GET AL ESTILO PIP
+
+
+
+
+
+

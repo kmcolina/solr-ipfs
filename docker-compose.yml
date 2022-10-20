@@ -1,0 +1,59 @@
+version: "3.2"
+
+services:
+
+  # Solr instance for running tests against
+  solr-0:
+    image: kmcolina/solr-master:latest
+    container_name: solr    
+    # extra_hosts:
+    #   - "host.docker.internal:host-gateway"
+    ports:
+      - "8983:8983"
+    networks:
+      - solr
+
+  # Hook to populate the image with test data:
+  populate:
+    image: kmcolina/solr-populate:latest
+    # entrypoint: ["/bin/sh","-c"]
+    command: "bash /docker/populate.sh"
+    #command: "ls"
+    environment:
+      - "SOLR_URL=${SOLR_URL:-http://solr:8983/solr/discovery}"
+    volumes:
+      - ./docker:/docker
+    networks:
+      - solr
+
+  ubuntupython:
+      image: kmcolina/ubuntu-python-ipfs:latest
+      volumes:
+        - ./docker:/docker
+      expose:
+        - "4001:4001"
+        - "127.0.0.1:8080:8080"
+        - "127.0.0.1:8081:8081"
+        - "127.0.0.1:5001:5001"
+      networks:
+        - solr 
+      #entrypoint: ["tail", "-f","/bin/sh"]
+      #entrypoint: ["tail", "-f"]
+
+  flask-app:
+    image: kmcolina/flask-app:latest
+    container_name: flask-app
+    ports:
+      - 5000:5000
+    networks:
+      - solr
+    depends_on:
+      - solr-0
+    links:
+      - solr-0
+            
+
+networks:
+  solr:
+    name: solr
+    driver: bridge

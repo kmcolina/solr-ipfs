@@ -1,0 +1,30 @@
+version: "3.2"
+
+services:
+
+  testpython:
+      image: testpython:latest
+      ports:
+        - "18983:8983"
+      volumes:
+        - ./docker:/docker
+      networks:
+        - solr 
+      entrypoint: ["tail", "-f", "/bin/bash"]       
+
+
+  IPFS-GO:
+      image: ipfs/go-ipfs
+      container_name: go-ipf
+      ports:
+        - "9500:9501"
+      volumes:
+        - ./docker:/docker
+      networks:
+        - solr        
+      expose:
+        - "7070"
+
+
+networks:
+  solr:
