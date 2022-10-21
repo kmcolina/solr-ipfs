@@ -33,6 +33,8 @@ docker exec -it solrwayback-ipfs-ubuntupython-1 python3 load_index_ipfs.py
 Solr-IPFS uses a Solr index of WARC files development for 
 United Kingdom Web Archive available on https://github.com/ukwa/webarchive-discovery/tree/master/warc-indexer
 
+An implementation of how to use the indexer is available at https://github.com/ukwa/webarchive-discovery this was taken as a basis to develop the services used in the `docker-compose.yml` file
+
 Example usage:
 ```
 java -jar /jars/warc-indexer.jar -s ${SOLR_URL} /docker/test-warcs/TEST-20220304210400500-00000-80~h3w~8443.warc /docker/test-warcs/IAH-20080430204825-00000-blackbook.warc
