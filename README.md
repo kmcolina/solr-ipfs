@@ -40,5 +40,7 @@ Example usage:
 java -jar /jars/warc-indexer.jar -s ${SOLR_URL} /docker/test-warcs/TEST-20220304210400500-00000-80~h3w~8443.warc /docker/test-warcs/IAH-20080430204825-00000-blackbook.warc
 
 ```
-el comando anterior es el que se ejecuta en el servicio populate, si se desean agregar nuevos archivos warc para su indexacion es necesario copiarlos al contenedor usando los comandos de docker. the file that must change is the `populate.sh`, it should be noted that it is also necessary to copy the warc file that you want to index inside the container
+
+
+the previous command is the one that is executed in the populate service, if you want to add new warc files for indexing it is necessary to copy them to the container using the docker commands. the file that must change is the `populate.sh`, it should be noted that it is also necessary to copy the warc file that you want to index inside the container
 
